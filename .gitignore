@@ -1,1 +1,4 @@
 g-list/js/config.js
+g-list/node_modules
+g-list/package-lock.json
+g-list/package.json
