@@ -2,7 +2,10 @@ window.onload = (event) => {
   console.log("page is fully loaded");
   $("#test").html(`test`);
 
-  getGame();
+  (async () => {
+    const token = await getToken();
+    await fetchGames(token);
+  })();
 };
 
 const myClientId = config.MY_CLIENT_ID;
@@ -67,17 +70,14 @@ const fetchGames = async (token) => {
       'Authorization': `Bearer ${token}`,
       'Accept': 'application/json',
     },
-    body: `
-    fields name, rating, genres.name;
-    limit 10;
-  `
+    body: `fields name, rating, genres.name;limit 10;`
   })
 
   const games = await response.json();
   console.log(games);
 }
 
-(async () => {
-  const token = await getToken();
-  await fetchGames(token);
-})();
+// (async () => {
+//   const token = await getToken();
+//   await fetchGames(token);
+// })();
