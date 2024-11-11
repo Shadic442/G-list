@@ -1,9 +1,15 @@
+const MyConfig  = require("./config"); // Import config
 const express = require("express");
-// import { config } from "./config.js";
 const app = express();
+// bypass cors errors
+const cors = require("cors");
 
-const myClientId = config.MY_CLIENT_ID;
-const mySecret = config.MY_SECRET;
+ /**
+  * add this "type": "module" , to switch to Switch to ES Module Syntax
+  *  */ 
+
+const myClientId = MyConfig.MY_CLIENT_ID;
+const mySecret = MyConfig.MY_SECRET;
 // const myToken = config.MY_TOKEN;
 
 /**
@@ -19,9 +25,13 @@ const getToken = async () => {
   });
 
   const data = await response.json();
-  console.log(data);
+  console.log('data tocken from getToken');
+  console.log(data.access_token);
   return data.access_token;
 };
+
+// Enable CORS for all routes
+app.use(cors());
 
 app.get("/games", async (req, res) => {
   var token = await getToken();
@@ -37,6 +47,8 @@ app.get("/games", async (req, res) => {
 
   const games = await response.json();
   res.json(games);
+  console.log('app.get /games');
+  console.log(games)
 });
 
 app.listen(3000, () => console.log("Server running on port 3000"));
@@ -44,11 +56,9 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 function getGame() {
   fetch("http://localhost:3000/games")
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then((data) => {console.log('data from getGame'); console.log(data); })
     .catch((err) => console.error(err));
 }
-
-// require("dotenv").config();
 // const express = require("express");
 // // // const fetch = require("node-fetch");
 
