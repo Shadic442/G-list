@@ -56,7 +56,7 @@ app.listen(3000, () => console.log("Server running on port 3000"));
 function getGame() {
   fetch("http://localhost:3000/games")
     .then((response) => response.json())
-    .then((data) => {console.log('data from getGame'); console.log(data); })
+    .then((data) => {console.log('data from getGame : '); console.log(data); alert(data[0]["name"]); alert(Object.keys(data).length);})
     .catch((err) => console.error(err));
 }
 // const express = require("express");
